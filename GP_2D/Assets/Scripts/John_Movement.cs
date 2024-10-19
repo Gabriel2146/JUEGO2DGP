@@ -10,6 +10,7 @@ public class John_Movement : MonoBehaviour
 
     private Rigidbody2D Rigidbody2D; //referencia al rigid body del personaje 
     private float Horizontal;
+    private bool Grounded;
 
     // Start is called before the first frame update
     void Start()
@@ -22,8 +23,17 @@ public class John_Movement : MonoBehaviour
     {
         Horizontal = Input.GetAxisRaw("Horizontal"); //obtiene input del teclado 
 
+
+
+        Debug.DrawRay(transform.position, Vector3.down * 0.1f, Color.red);
+        if (Physics2D.Raycast(transform.position, Vector3.down, 0.1f))
+        {
+            Grounded = true;
+        }
+        else Grounded = false;
+
         //salto
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space) && Grounded)
         {
             Jump();
         }
