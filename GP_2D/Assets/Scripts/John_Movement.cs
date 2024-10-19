@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class John_Movement : MonoBehaviour
 {
+    public float JumpForce;
+    public float Speed;
+
     private Rigidbody2D Rigidbody2D; //referencia al rigid body del personaje 
     private float Horizontal;
 
@@ -17,7 +21,17 @@ public class John_Movement : MonoBehaviour
     void Update()
     {
         Horizontal = Input.GetAxisRaw("Horizontal"); //obtiene input del teclado 
-        
+
+        //salto
+        if(Input.GetKeyDown(KeyCode.W))
+        {
+            Jump();
+        }
+
+    }
+    private void Jump()
+    {
+        Rigidbody2D.AddForce(Vector2.up * JumpForce);
     }
 
     private void FixedUpdate()
