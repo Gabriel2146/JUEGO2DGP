@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class John_Movement : MonoBehaviour
 {
-    public float JumpForce;
     public float Speed;
+    public float JumpForce;
 
     private Rigidbody2D Rigidbody2D; //referencia al rigid body del personaje 
     private float Horizontal;
@@ -23,19 +23,22 @@ public class John_Movement : MonoBehaviour
         Horizontal = Input.GetAxisRaw("Horizontal"); //obtiene input del teclado 
 
         //salto
-        if(Input.GetKeyDown(KeyCode.W))
+        if(Input.GetKeyDown(KeyCode.Space))
         {
             Jump();
         }
 
     }
+
+    private void FixedUpdate()
+    {
+        Rigidbody2D.velocity = new Vector2(Horizontal * Speed ,Rigidbody2D.velocity.y); //si pulsamos a ira a la izq y si pulsamod d a la der
+    }
+
     private void Jump()
     {
         Rigidbody2D.AddForce(Vector2.up * JumpForce);
     }
 
-    private void FixedUpdate()
-    {
-        Rigidbody2D.velocity = new Vector2(Horizontal,Rigidbody2D.velocity.y); //si pulsamos a ira a la izq y si pulsamod d a la der
-    }
+
 }
