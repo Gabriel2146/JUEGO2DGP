@@ -9,6 +9,7 @@ public class John_Movement : MonoBehaviour
     public float JumpForce;
 
     private Rigidbody2D Rigidbody2D; //referencia al rigid body del personaje 
+    private Animator Animator;
     private float Horizontal;
     private bool Grounded;
 
@@ -16,6 +17,7 @@ public class John_Movement : MonoBehaviour
     void Start()
     {
         Rigidbody2D = GetComponent<Rigidbody2D>();//accede al rigidbody 
+        Animator = GetComponent<Animator>(); //accede a animator 
     }
 
     // Update is called once per frame
@@ -23,7 +25,10 @@ public class John_Movement : MonoBehaviour
     {
         Horizontal = Input.GetAxisRaw("Horizontal"); //obtiene input del teclado 
 
+        if (Horizontal < 0.0f) transform.localScale = new Vector3 (-1.0f, 1.0f, 1.0f);
+        else if (Horizontal > 0.0f) transform.localScale = new Vector3(1.0f, 1.0f, 1.0f); 
 
+        Animator.SetBool("running", Horizontal != 0.0f);
 
         Debug.DrawRay(transform.position, Vector3.down * 0.1f, Color.red);
         if (Physics2D.Raycast(transform.position, Vector3.down, 0.1f))
