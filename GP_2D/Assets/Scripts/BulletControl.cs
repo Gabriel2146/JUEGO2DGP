@@ -6,6 +6,7 @@ public class BulletControl : MonoBehaviour
 {
     public float Speed;
     private Rigidbody2D Rigidbody2D;
+    private Vector2 Direction;
 
     // Start is called before the first frame update
     void Start()
@@ -18,4 +19,20 @@ public class BulletControl : MonoBehaviour
     {
         Rigidbody2D.velocity = Vector2.right * Speed; 
     }
+
+    private void FixedUpdate()
+    {
+        Rigidbody2D.velocity = Direction * Speed;
+    }
+
+    public void SetDirection(Vector2 direction)
+    {
+        Direction = direction;
+    }
+
+    public void DestroyBullet()
+    {
+        Destroy(gameObject);
+    }
+
 }

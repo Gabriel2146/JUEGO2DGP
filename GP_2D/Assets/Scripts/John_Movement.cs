@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class John_Movement : MonoBehaviour
 {
+    public GameObject bulletPrefab; 
     public float Speed;
     public float JumpForce;
 
@@ -12,6 +13,7 @@ public class John_Movement : MonoBehaviour
     private Animator Animator;
     private float Horizontal;
     private bool Grounded;
+    private float LastShoot; //almacena tiempo del ultimo disparo
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +45,14 @@ public class John_Movement : MonoBehaviour
             Jump();
         }
 
+        //bala
+        if (Input.GetKeyUp(KeyCode.P) && Time.time > LastShoot + 0.25f)
+        {
+            Shoot();
+            LastShoot = Time.time;
+        }
+
+
     }
 
     private void FixedUpdate()
@@ -55,5 +65,14 @@ public class John_Movement : MonoBehaviour
         Rigidbody2D.AddForce(Vector2.up * JumpForce);
     }
 
+    private void Shoot()
+    {
+        Vector3 direction;
 
+        if (transform.localScale.x == 1.0f) direction = Vector2.right;
+        else direction = Vector2.left;
+
+        GameObject bullet = Instantiate(bulletPrefab, transform.position + direction * 0.1f, Quaternion.identity);
+        bullet.GetComponent<BulletControl>().SetDirection(direction);
+    }
 }
