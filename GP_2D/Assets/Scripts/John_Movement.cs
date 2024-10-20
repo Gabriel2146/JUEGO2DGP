@@ -14,6 +14,7 @@ public class John_Movement : MonoBehaviour
     private float Horizontal;
     private bool Grounded;
     private float LastShoot; //almacena tiempo del ultimo disparo
+    private int health = 5; //vida  
 
     // Start is called before the first frame update
     void Start()
@@ -75,4 +76,14 @@ public class John_Movement : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab, transform.position + direction * 0.1f, Quaternion.identity);
         bullet.GetComponent<BulletControl>().SetDirection(direction);
     }
+
+    public void Hit ()
+    {
+        health = health - 1;
+        if (health == 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
 }
